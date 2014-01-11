@@ -26,7 +26,8 @@
     "grunt-contrib-clean"  : "latest",
     "grunt-growl"          : "latest",
     "jquery"               : "latest",
-    "jasmine-jquery"       : "latest"
+    "jasmine-jquery"       : "latest",
+    "grunt-coffeelint"     : "latest"
   },
   "scripts": {
     "test": "grunt travis"

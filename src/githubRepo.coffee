@@ -62,16 +62,25 @@ jQuery ->
               ul = $('<ul>')
               for index, branche of data
                 # Appel de l'API branche
-                $.ajax 'https://api.github.com/repos/'+repo+'/branches/'+branche.name,
+                $.ajax 'https://api.github.com/repos/'+
+                        repo+'/branches/'+branche.name,
                   success: (data, textStatus, jqXHR) ->
                     li = $('<li>')
                           .append $('<a>')
-                            .attr('href', 'http://github.com/'+repo+'/tree/'+data.name)
+                            .attr(
+                              'href',
+                              'http://github.com/'+repo+'/tree/'+data.name
+                            )
                             .append data.name
                     li.append data.commit.sha.substring(0,8)
                     li.append data.commit.commit.author.date.substring(0,10)
                     li.append data.commit.commit.message
-                    li.append $('<img>').attr('src', 'https://travis-ci.org/'+repo+'.png?branch='+data.name)
+                    li.append $('<img>')
+                                .attr(
+                                  'src',
+                                  'https://travis-ci.org/'+
+                                    repo+'.png?branch='+data.name
+                                )
                     ul.append li
 
               body.append ul
