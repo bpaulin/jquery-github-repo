@@ -66,9 +66,13 @@ module.exports = function(grunt) {
         'src/*.coffee', 
         'spec/**/*.coffee'
       ],
-      tasks: ['coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
+      tasks: ['coffeelint', 'growl:coffeelint', 'coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
     },
     growl : {
+      coffeelint : {
+        title   : 'Coffee Lint',
+        message : 'Coffee linted successfully'
+      },
       coffee : {
         title   : 'CoffeeScript',
         message : 'Compiled successfully'
@@ -78,7 +82,10 @@ module.exports = function(grunt) {
         message : 'Tests passed successfully'
       }
     },
-    clean: ["dist", "spec/dist"]
+    clean: ["dist", "spec/dist"],
+    coffeelint: {
+      app: ['src/**/*.coffee', 'spec/**/*.coffee']
+    }
   });
 
   // Lib tasks.
@@ -88,9 +95,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default and Build tasks
-  mainTasks = ['coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
+  mainTasks = ['coffeelint', 'growl:coffeelint', 'coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
   grunt.registerTask('default', mainTasks);
   grunt.registerTask('build', mainTasks.concat(['uglify']));
 

@@ -2,7 +2,7 @@
   "name"            : "jquery-github-repo",
   "title"           : "jquery-github-repo",
   "description"     : "bpaulin/jquery-github-repo",
-  "version"         : "0.0.1",
+  "version"         : "0.1",
   "homepage"        : "https://github.com/bpaulin/jquery-github-repo",
   "author"          : {
     "name"  : "Bruno Paulin",
@@ -26,7 +26,8 @@
     "grunt-contrib-clean"  : "latest",
     "grunt-growl"          : "latest",
     "jquery"               : "latest",
-    "jasmine-jquery"       : "latest"
+    "jasmine-jquery"       : "latest",
+    "grunt-coffeelint"     : "latest"
   },
   "scripts": {
     "test": "grunt travis"
