@@ -59,31 +59,41 @@ jQuery ->
           # Appel de l'API branches
           $.ajax 'https://api.github.com/repos/'+repo+'/branches',
             success: (data, textStatus, jqXHR) ->
-              ul = $('<ul>')
+              dl = $('<dl>')
+                    .addClass("dl-horizontal")
               for index, branche of data
                 # Appel de l'API branche
                 $.ajax 'https://api.github.com/repos/'+
                         repo+'/branches/'+branche.name,
                   success: (data, textStatus, jqXHR) ->
-                    li = $('<li>')
+                    dt = $('<dt>')
                           .append $('<a>')
                             .attr(
                               'href',
                               'http://github.com/'+repo+'/tree/'+data.name
                             )
                             .append data.name
-                    li.append data.commit.sha.substring(0,8)
-                    li.append data.commit.commit.author.date.substring(0,10)
-                    li.append data.commit.commit.message
-                    li.append $('<img>')
+
+                    dd = $('<dd>')
+                    dd.append $('<span>')
+                              .append data.commit.commit.author.date
+                                .substring(0,10)
+                    dd.append $('<img>')
                                 .attr(
                                   'src',
                                   'https://travis-ci.org/'+
                                     repo+'.png?branch='+data.name
                                 )
-                    ul.append li
+                    urlCommit = 'https://github.com/'+repo+
+                                  '/commit/'+data.commit.sha
+                    dd.append $('<a>')
+                              .attr('href', urlCommit)
+                              .append data.commit.commit.message
+                                .substring(0,25)
+                    dl.append dt
+                    dl.append dd
 
-              body.append ul
+              footer.append dl
 
       @setState 'ready'
 
