@@ -21,7 +21,24 @@
         return this.settings[name].apply(this, args);
       };
       this.init = function() {
+        var body, footer, heading, texte;
         this.settings = $.extend({}, this.defaults, options);
+        texte = this.$element.html();
+        this.$element.empty();
+        this.$element.addClass('panel panel-primary');
+        heading = $('<div>').addClass('panel-heading').append(this.$element.data('repository'));
+        body = $('<div>').addClass('panel-body').append(texte);
+        footer = $('<div>').addClass('panel-footer').append('http://github.com/' + this.$element.data('repository'));
+        this.$element.append(heading).append(body).append(footer);
+        $.ajax('https://api.github.com/repos/' + this.$element.data('repository'), {
+          success: function(data, textStatus, jqXHR) {
+            heading.empty();
+            heading.append($('<h1>').addClass('panel-title').append(data.name));
+            heading.append($('<small>').append(data.description));
+            footer.empty();
+            return footer.append($('<a>').attr('href', data.url).append(data.url));
+          }
+        });
         return this.setState('ready');
       };
       this.init();

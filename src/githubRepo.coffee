@@ -25,6 +25,32 @@ jQuery ->
 
     @init = ->
       @settings = $.extend( {}, @defaults, options )
+      texte = @$element.html()
+      @$element.empty()
+
+      # Decoration du div
+      @$element.addClass('panel panel-primary')
+      heading = $('<div>').addClass('panel-heading')
+              .append(@$element.data('repository'))
+      body = $('<div>').addClass('panel-body')
+              .append(texte)
+      footer = $('<div>').addClass('panel-footer')
+              .append('http://github.com/'+@$element.data('repository'))
+      @$element.append(heading).append(body).append(footer)
+
+      # Appel de l'API
+      $.ajax 'https://api.github.com/repos/'+@$element.data('repository'),
+        success: (data, textStatus, jqXHR) ->
+          # Heading
+          heading.empty()
+          heading.append $('<h1>').addClass('panel-title').append(data.name)
+          heading.append $('<small>').append data.description
+
+          # Body
+
+          # Footer
+          footer.empty()
+          footer.append $('<a>').attr('href', data.url).append(data.url)
 
       @setState 'ready'
 
