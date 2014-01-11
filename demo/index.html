@@ -16,7 +16,7 @@
     </header>
 
     <div id="main">
-      <div id="jquery-github-repo" data-repository="bpaulin/jquery-github-repo">
+      <div class="jquery-github-repo" id="jquery-github-repo" data-repository="bpaulin/jquery-github-repo">
         jouer avec coffeescript, ajax & co
       </div>
     </div>
@@ -30,7 +30,7 @@
   <script src="../dist/githubRepo.js"></script>
   <script>
   $( function() {
-    $( '#jquery-github-repo' ).githubRepo( {
+    $( '.jquery-github-repo' ).githubRepo( {
       message: 'Hello World'
     } );
   } );
