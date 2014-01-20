@@ -3,8 +3,6 @@ describe 'githubRepo', ->
     message: 'Hello World'
 
   beforeEach ->
-    jasmine.getFixtures().fixturesPath = 'spec/fixtures/'
-    loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
 
   describe 'plugin behavior', ->

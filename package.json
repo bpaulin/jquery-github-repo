@@ -23,12 +23,12 @@
     "grunt-cli": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-contrib-coffee": "latest",
-    "grunt-contrib-jasmine": "latest",
+    "grunt-contrib-jasmine": "gruntjs/grunt-contrib-jasmine#jasmine2-support",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-clean": "latest",
     "grunt-growl": "latest",
     "jquery": "latest",
-    "jasmine-jquery": "latest",
+    "jasmine-jquery": "velesin/jasmine-jquery",
     "grunt-coffeelint": "latest"
   },
   "scripts": {

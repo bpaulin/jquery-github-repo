@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'spec/',
           src: '*.coffee',
-          dest: 'spec/javascript/',
+          dest: 'spec/javascripts/',
           ext: '.js'
         }]
       },
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'spec//helpers/',
           src: '*.coffee',
-          dest: 'spec/javascript/helpers/',
+          dest: 'spec/javascripts/helpers/',
           ext: '.js'
         }]
       }
@@ -53,8 +53,11 @@ module.exports = function(grunt) {
     jasmine : {
       src     : ['dist/*.js','!dist/*.min.js'],
       options : {
-        specs   : 'spec/javascript/*.js',
-        helpers : 'spec/javascript/helpers/*.js',
+        specs   : 'spec/javascripts/*.js',
+        helpers : [
+          'spec/javascripts/helpers/*.js',
+          "node_modules/jquery/dist/jquery.min.js"
+          ],
         vendor : [
           "node_modules/jquery/dist/jquery.min.js",
           "node_modules/jasmine-jquery/lib/jasmine-jquery.js",
@@ -64,9 +67,10 @@ module.exports = function(grunt) {
     watch : {
       files: [
         'src/*.coffee',
-        'spec/**/*.coffee'
+        'spec/**/*.coffee',
+        'spec/javascripts/fixtures/**/*'
       ],
-      tasks: ['coffeelint', 'coffee', 'jasmine']
+      tasks: ['default']
     },
     growl : {
       coffeelint : {
@@ -82,7 +86,9 @@ module.exports = function(grunt) {
         message : 'Tests passed successfully'
       }
     },
-    clean: ["dist", "spec/javascript"],
+    clean: {
+      files: ['dist/**/*.js', 'spec/**/*.js']
+    },
     coffeelint: {
       app: ['src/**/*.coffee', 'spec/**/*.coffee']
     }
@@ -98,7 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default and Build tasks
-  mainTasks = ['coffeelint', 'coffee', 'jasmine']
+  mainTasks = ['clean', 'coffeelint', 'coffee', 'jasmine']
   grunt.registerTask('default', mainTasks.concat(['uglify']));
 
   // Travis CI task.

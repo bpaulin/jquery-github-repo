@@ -1,8 +1,6 @@
 describe 'githubRepo Parameters', ->
 
   beforeEach ->
-    jasmine.getFixtures().fixturesPath = 'spec/fixtures/'
-    loadFixtures 'fragment.html'
     @$element = $( '#fixtures' )
 
   describe 'user param', ->
