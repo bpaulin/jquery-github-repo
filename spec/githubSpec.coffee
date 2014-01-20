@@ -46,3 +46,13 @@ describe 'Github Repositories', ->
         expect(children[0]).toBeMatchedBy('div.panel-heading')
         expect(children[1]).toBeMatchedBy('div.panel-body')
         expect(children[2]).toBeMatchedBy('div.panel-footer')
+
+    it 'should display name in (.panel-heading .name)', ->
+      element = $( '#fixtures' )
+      element.githubRepo()
+      repos = getJSONFixture('github_user.json')
+      for repo in repos
+        expect(
+          $('.repository[data-github-id="'+repo.id+'"] .panel-heading .name')
+        ).toContainText(repo.name)
+

@@ -38,13 +38,28 @@ jQuery ->
       $.ajax 'https://api.github.com/users/'+@settings.user+'/repos',
         success: (data, textStatus, jqXHR) ->
           for dataRepo in data
-            repository = $('<div class="repository panel panel-default">')
-              .attr('data-github-id', dataRepo.id)
-              .append($('<div class="panel-heading">'))
-              .append($('<div class="panel-body">'))
-              .append($('<div class="panel-footer">'))
+            # div du Heading
+            divHeading = $('<div class="panel-heading">')
+            spanFullName = $('<span class="name">')
+            divHeading.append(spanFullName)
+            # div du Body
+            divBody = $('<div class="panel-body">')
+            # div du Footer
+            divFooter = $('<div class="panel-footer">')
+            # div du Repo
+            divRepo = $('<div class="repository panel panel-default">')
+            divRepo
+              .append(divHeading)
+              .append(divBody)
+              .append(divFooter)
+
+            # Remplissage des données
+            divRepo.attr('data-github-id', dataRepo.id)
+            spanFullName.text(dataRepo.name)
+
+            # Ajout au repositories
             repositories.append(
-              repository
+              divRepo
             )
 
       @setState 'ready'
