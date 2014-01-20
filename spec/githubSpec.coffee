@@ -11,6 +11,12 @@ describe 'Github Repositories', ->
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('https://api.github.com/users/noone/repos')
 
+    it 'should call the forced url', ->
+      plugin = new $.githubRepo(@$element, {"githubForceJson":"bpaulin.json"})
+      expect(
+        $.ajax.calls.mostRecent().args[0]
+      ).toEqual('bpaulin.json')
+
   describe 'Repositories', ->
     it 'should be a div.repositories', ->
       $element = $( '#fixtures' )

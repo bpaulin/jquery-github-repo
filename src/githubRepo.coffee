@@ -35,7 +35,11 @@ jQuery ->
         repositories
       )
 
-      $.ajax 'https://api.github.com/users/'+@settings.user+'/repos',
+      urlGithub = 'https://api.github.com/users/'+@settings.user+'/repos'
+      if @settings.githubForceJson
+        urlGithub = @settings.githubForceJson
+
+      $.ajax urlGithub,
         success: (data, textStatus, jqXHR) ->
           for dataRepo in data
             # div du Heading
@@ -73,6 +77,8 @@ jQuery ->
   # default plugin settings
   $.githubRepo::defaults =
       user: 'bpaulin'
+      githubForceJson: false
+
 
   $.fn.githubRepo = ( options ) ->
     this.each ->

@@ -16,21 +16,7 @@
     </header>
 
     <div id="main">
-      <div class="jquery-github-repo" data-repository="bpaulin/jquery-github-repo">
-        jouer avec coffeescript, ajax &amp; co
-      </div>
-
-      <div class="jquery-github-repo" data-repository="bpaulin/depot-manquant">
-        Ce dépot n'existe pas
-      </div>
-
-      <div class="jquery-github-repo" data-repository="symfony/symfony">
-        Symfony
-      </div>
-
-      <div class="jquery-github-repo" data-repository="bpaulin/upfit-android">
-        Depot sans travis
-      </div>
+      <div class="jquery-github-repo">
     </div>
 
     <footer>
@@ -43,8 +29,9 @@
   <script>
   $( function() {
     $( '.jquery-github-repo' ).githubRepo( {
-      message: 'Hello World'
-    } );
+      user: 'bpaulin',
+      githubForceJson : '../bpaulin.json'
+    });
   } );
   </script>
 

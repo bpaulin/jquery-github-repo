@@ -4,3 +4,4 @@ node_modules/
 /*.sublime-workspace
 /spec/javascripts/**/*.js
 /dist
+bpaulin.json
