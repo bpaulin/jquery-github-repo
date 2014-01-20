@@ -1,8 +1,9 @@
 describe 'Github Repositories', ->
 
   beforeEach ->
-    @$element = $( '#fixtures' )
     loadFixtures('origin.html')
+    @$element = $( '#fixtures' )
+    @$element.githubRepo()
 
   describe 'Github API', ->
     it 'should call the correct url', ->
@@ -19,23 +20,17 @@ describe 'Github Repositories', ->
 
   describe 'Repositories', ->
     it 'should be a div.repositories', ->
-      $element = $( '#fixtures' )
-      plugin = new $.githubRepo($element)
       expect(
-        $element.children('div.repositories').length
+        @$element.children('div.repositories').length
       ).toBe(1)
 
     it 'should contain each repository in a div.repository', ->
-      $element = $( '#fixtures' )
-      $element.githubRepo()
       expect(
-        $element.children('div.repositories').children('div.repository').length
+        @$element.children('div.repositories').children('div.repository').length
       ).toBe(getJSONFixture('github_user.json').length)
 
   describe 'A repository', ->
     it 'should be ided by data-github-id', ->
-      $element = $( '#fixtures' )
-      $element.githubRepo()
       data = getJSONFixture('github_user.json')
       for repo in data
         expect(
@@ -43,8 +38,6 @@ describe 'Github Repositories', ->
         ).toContainElement('.repository[data-github-id="'+repo.id+'"]')
 
     it 'should have the same structure as a twbs panel', ->
-      element = $( '#fixtures' )
-      element.githubRepo()
       $('#fixtures div.repositories div.repository').each (i, e)->
         expect(e).toBeMatchedBy('div.panel.panel-default')
         children = $(e).children('*')
@@ -54,8 +47,6 @@ describe 'Github Repositories', ->
         expect(children[2]).toBeMatchedBy('div.panel-footer')
 
     it 'should display name in (.panel-heading .name)', ->
-      element = $( '#fixtures' )
-      element.githubRepo()
       repos = getJSONFixture('github_user.json')
       for repo in repos
         expect(
