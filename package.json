@@ -32,6 +32,6 @@
     "grunt-coffeelint": "latest"
   },
   "scripts": {
-    "test": "grunt travis"
+    "test": "grunt test"
   }
 }

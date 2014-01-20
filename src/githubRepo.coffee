@@ -105,7 +105,7 @@ jQuery ->
 
   # default plugin settings
   $.githubRepo::defaults =
-      message: 'Hello world'  # option description
+      user: 'bpaulin'
 
   $.fn.githubRepo = ( options ) ->
     this.each ->

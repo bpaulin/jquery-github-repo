@@ -69,7 +69,7 @@
       return this;
     };
     $.githubRepo.prototype.defaults = {
-      message: 'Hello world'
+      user: 'bpaulin'
     };
     return $.fn.githubRepo = function(options) {
       return this.each(function() {
