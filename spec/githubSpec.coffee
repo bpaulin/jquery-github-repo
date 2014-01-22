@@ -100,20 +100,4 @@ describe 'Github Repositories', ->
             expect(
               @$repo.find('a.archive')
             ).toHaveAttr('href', repo.html_url+'/archive/master.zip')
-          # owner+link
-          # watcher+fork
-          #
-          # last+branch
-          # description+readme
-          # download zip + git clone
-
-
-
-
-# it 'should display name in (.panel-heading .name)', ->
-#   repos = getJSONFixture('github_user.json')
-#   for repo in repos
-#     expect(
-#       $('.repository[data-github-id="'+repo.id+'"] .panel-heading .name')
-#     ).toContainText(repo.name)
 
