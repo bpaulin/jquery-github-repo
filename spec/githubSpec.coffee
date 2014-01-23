@@ -29,6 +29,13 @@ describe 'Github Repositories', ->
         @$element.children('div.repositories').children('div.repository').length
       ).toBe(getJSONFixture('github_user.json').length)
 
+  it 'should move existant content in repository content', ->
+    expect(
+      @$element.find(
+        'div.repository[data-github-full-name="bpaulin/bootstrap"] .panel-body'
+      )
+    ).toContainText('this text stay here')
+
   describe 'A repository', ->
     it 'should have the same structure as a twbs panel', ->
       $('#fixtures div.repositories div.repository').each (i, e)->
@@ -42,6 +49,7 @@ describe 'Github Repositories', ->
     describe 'should fill repository data for:', ->
       repos = getJSONFixture('github_user.json')
       for repo in repos
+        # describe each repos
         describe repo.full_name, ->
           beforeEach ->
             @$repo = $('.repository[data-github-id="'+repo.id+'"] ')

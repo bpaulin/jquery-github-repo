@@ -27,13 +27,14 @@ jQuery ->
       @settings = $.extend( {}, @defaults, options )
       settings = @settings
 
-      @$element.empty()
-
       # GitHub
-      repositories = $('<div>').addClass('repositories')
-      @$element.append(
-        repositories
-      )
+      if @$element.find('div.repositories').length>0
+        repositories = @$element.find('div.repositories')[0]
+      else
+        repositories = $('<div>').addClass('repositories')
+        @$element.append(
+          repositories
+        )
 
       urlGithub = 'https://api.github.com/users/'+@settings.user+'/repos'
       if @settings.githubForceJson
@@ -51,9 +52,6 @@ jQuery ->
               fork = '<span class="label label-warning">fork</span>'
             template =
             """
-<div class="repository panel panel-default"
-  data-github-id="#{ dataRepo.id }"
-  data-github-full-name="#{ dataRepo.full_name }">
   <div class="panel-heading">
     <strong>
       <a href="#{ dataRepo.owner.html_url }" class="owner">
@@ -73,7 +71,7 @@ jQuery ->
     <div class="spacer" style="clear: both;"></div>
   </div>
   <div class="panel-body">
-    <span class="description">#{ dataRepo.description }</span>
+    <div class="description">#{ dataRepo.description }</div>
   </div>
   <div class="panel-footer">
     #{ fork }
@@ -92,12 +90,26 @@ jQuery ->
       </a>
     </div>
   </div>
-</div>
 """
-            # Ajout au repositories
-            repositories.append(
-              $(template)
-            )
+            if $(repositories).find(
+              "[data-github-full-name='#{ dataRepo.full_name }']"
+              ).length>0
+              repository = $(repositories)
+                .find("[data-github-full-name='#{ dataRepo.full_name }']"
+              )[0]
+            else
+              repository = $('<div>').addClass('repository')
+              # Ajout au repositories
+              $(repositories).append(
+                repository
+              )
+            origine = $(repository).contents()
+            $(repository).empty()
+            $(repository).addClass("panel panel-default")
+              .attr('data-github-id', dataRepo.id)
+              .attr('data-github-full-name', dataRepo.full_name)
+              .append(template)
+            $(repository).children('.panel-body').append(origine)
 
       @setState 'ready'
 
