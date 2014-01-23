@@ -51,6 +51,13 @@ describe 'Github Repositories', ->
               $('.repositories')[0]
             ).toContainElement('.repository[data-github-id="'+repo.id+'"]')
 
+          it 'should be ided by data-github-full-name', ->
+            expect(
+              $('.repositories')[0]
+            ).toContainElement(
+              '.repository[data-github-full-name="'+repo.full_name+'"]'
+            )
+
           it 'should display linked name in (.panel-heading .name)', ->
             link = @$repo.find('.panel-heading .name')[0]
             expect(link).toContainText(repo.name)

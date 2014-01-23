@@ -51,7 +51,9 @@ jQuery ->
               fork = '<span class="label label-warning">fork</span>'
             template =
             """
-<div class="repository panel panel-default" data-github-id="#{ dataRepo.id }">
+<div class="repository panel panel-default"
+  data-github-id="#{ dataRepo.id }"
+  data-github-full-name="#{ dataRepo.full_name }">
   <div class="panel-heading">
     <strong>
       <a href="#{ dataRepo.owner.html_url }" class="owner">
