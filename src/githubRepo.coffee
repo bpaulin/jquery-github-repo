@@ -23,10 +23,7 @@ jQuery ->
     @callSettingFunction = ( name, args = [] ) ->
       @settings[name].apply( this, args )
 
-    @init = ->
-      @settings = $.extend( {}, @defaults, options )
-      settings = @settings
-
+    @github = ->
       # GitHub
       if @$element.find('div.repositories').length>0
         repositories = @$element.find('div.repositories')[0]
@@ -111,6 +108,13 @@ jQuery ->
               .append(template)
             $(repository).children('.panel-body').append(origine)
 
+
+    @init = ->
+      @settings = $.extend( {}, @defaults, options )
+      settings = @settings
+      if @settings.github
+        @github()
+
       @setState 'ready'
 
     # initialise the plugin
@@ -123,7 +127,7 @@ jQuery ->
   $.githubRepo::defaults =
       user: 'bpaulin'
       githubForceJson: false
-
+      github: true
 
   $.fn.githubRepo = ( options ) ->
     this.each ->
