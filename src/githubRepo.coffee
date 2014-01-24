@@ -128,6 +128,7 @@ jQuery ->
       user: 'bpaulin'
       githubForceJson: false
       github: true
+      coderwall: true
 
   $.fn.githubRepo = ( options ) ->
     this.each ->
