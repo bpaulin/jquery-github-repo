@@ -29,7 +29,7 @@ describe 'Github Repositories', ->
         @$element.children('div.repositories').children('div.repository').length
       ).toBe(getJSONFixture('github_user.json').length)
 
-  it 'should move existant content in repository content', ->
+  it 'should move content in repository body', ->
     expect(
       @$element.find(
         'div.repository[data-github-full-name="bpaulin/bootstrap"] .panel-body'
