@@ -1,0 +1,23 @@
+{
+  "username": "bpaulin",
+  "badges": [
+    {
+      "name": "A skill",
+      "description": "Have a skill",
+      "created": "2012-01-01T00:00:00Z",
+      "badge": "https://path.to/skill.png"
+    },
+    {
+      "name": "A skill 2",
+      "description": "Have a better skill",
+      "created": "2013-01-01T00:00:00Z",
+      "badge": "https://path.to/skill2.png"
+    },
+    {
+      "name": "A different skill",
+      "description": "Have a different skill",
+      "created": "2014-01-01T00:00:00Z",
+      "badge": "https://path.to/another-skill.png"
+    }
+  ]
+}

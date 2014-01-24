@@ -13,6 +13,11 @@ describe 'githubRepo Parameters', ->
       plugin = new $.githubRepo()
       expect( plugin.settings.githubForceJson ).toBe( false )
 
+  describe 'coderwallForceJson param', ->
+    it 'should be false as default', ->
+      plugin = new $.githubRepo()
+      expect( plugin.settings.coderwallForceJson ).toBe( false )
+
   describe 'github param', ->
     it 'should be true as default', ->
       plugin = new $.githubRepo()

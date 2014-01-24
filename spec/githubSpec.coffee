@@ -7,13 +7,19 @@ describe 'Github Repositories', ->
 
   describe 'Github API', ->
     it 'should call the correct url', ->
-      plugin = new $.githubRepo(@$element, {"user":"noone"})
+      plugin = new $.githubRepo(
+        @$element,
+        {"user":"noone", "coderwall": false}
+      )
       expect(
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('https://api.github.com/users/noone/repos')
 
     it 'should call the forced url', ->
-      plugin = new $.githubRepo(@$element, {"githubForceJson":"bpaulin.json"})
+      plugin = new $.githubRepo(
+        @$element,
+        {"githubForceJson":"bpaulin.json", "coderwall": false}
+      )
       expect(
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('bpaulin.json')

@@ -23,8 +23,16 @@ jQuery ->
     @callSettingFunction = ( name, args = [] ) ->
       @settings[name].apply( this, args )
 
+    @coderwall = ->
+      # Coderwall badges
+      urlCoderwall = 'http://www.coderwall.com/'+@settings.user+'.json'
+      if @settings.coderwallForceJson
+        urlCoderwall = @settings.coderwallForceJson
+      $.ajax urlCoderwall,
+        success: (data, textStatus, jqXHR) ->
+
     @github = ->
-      # GitHub
+      # GitHub Repositories
       if @$element.find('div.repositories').length>0
         repositories = @$element.find('div.repositories')[0]
       else
@@ -114,6 +122,8 @@ jQuery ->
       settings = @settings
       if @settings.github
         @github()
+      if @settings.coderwall
+        @coderwall()
 
       @setState 'ready'
 
@@ -126,9 +136,10 @@ jQuery ->
   # default plugin settings
   $.githubRepo::defaults =
       user: 'bpaulin'
-      githubForceJson: false
       github: true
+      githubForceJson: false
       coderwall: true
+      coderwallForceJson: false
 
   $.fn.githubRepo = ( options ) ->
     this.each ->

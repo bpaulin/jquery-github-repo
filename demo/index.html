@@ -18,6 +18,7 @@
 
     <div id="main">
       <div class="jquery-github-repo">
+        <div class="badges"></div>
         <div class="repositories">
           <div class="repository" data-github-full-name="bpaulin/bootstrap">
             this text stay here
@@ -37,7 +38,8 @@
   $( function() {
     $( '.jquery-github-repo' ).githubRepo( {
       user: 'bpaulin',
-      githubForceJson : '../bpaulin.json'
+      githubForceJson : '../bpaulin.json',
+      coderwallForceJson : '../badges.json'
     });
   } );
   </script>
