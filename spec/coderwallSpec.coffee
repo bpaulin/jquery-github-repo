@@ -53,3 +53,24 @@ describe 'coderwall badges', ->
           'div.badges div.cw-badge[data-badge-name="A skill"] .created'
         )
       ).toContainText('01-01-2012')
+
+    describe 'multi level skills', ->
+      it 'should not display low level skills', ->
+        expect(
+          @$element.find(
+            'div.badges div.cw-badge[data-badge-name="A multilevel skill"]'
+          ).length
+        ).toBe(0)
+        expect(
+          @$element.find(
+            'div.badges div.cw-badge[data-badge-name="A multilevel skill 2"]'
+          ).length
+        ).toBe(0)
+
+      it 'should display max level skills', ->
+        expect(
+          @$element.find(
+            'div.badges div.cw-badge[data-badge-name="A multilevel skill 3"]'
+          ).length
+        ).toBe(1)
+

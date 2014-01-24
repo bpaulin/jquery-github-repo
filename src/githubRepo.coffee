@@ -38,7 +38,20 @@ jQuery ->
         urlCoderwall = @settings.coderwallForceJson
       $.ajax urlCoderwall,
         success: (data, textStatus, jqXHR) ->
+          # Filter
+          badges = data.badges.slice(0)
           for dataBadge in data.badges
+            levels = new Array()
+            for badge in data.badges
+              if badge.name.indexOf(dataBadge.name)!=-1
+                levels.push(badge)
+
+            if levels.length>1
+              for level in levels when levels.indexOf(level) != levels.length-1
+                badges.splice(badges.indexOf(level),1)
+
+          # Display
+          for dataBadge in badges
             $divBadge = $('<div>')
               .attr('data-badge-name', dataBadge.name)
               .addClass('cw-badge')

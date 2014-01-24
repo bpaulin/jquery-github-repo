@@ -18,6 +18,12 @@
       "description": "Have a multilevel skill 2",
       "created": "2014-01-01T00:00:00Z",
       "badge": "https://path.to/multilevel-skill-2.png"
+    },
+    {
+      "name": "A multilevel skill 3",
+      "description": "Have a multilevel skill 3",
+      "created": "2014-01-01T00:00:00Z",
+      "badge": "https://path.to/multilevel-skill-3.png"
     }
   ]
 }
