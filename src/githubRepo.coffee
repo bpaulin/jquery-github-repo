@@ -25,11 +25,51 @@ jQuery ->
 
     @coderwall = ->
       # Coderwall badges
+      if @$element.find('div.badges').length>0
+        $divBadges = @$element.find('div.badges')
+      else
+        $divBadges = $('<div>').addClass('badges')
+        @$element.append(
+          $divBadges
+        )
+
       urlCoderwall = 'http://www.coderwall.com/'+@settings.user+'.json'
       if @settings.coderwallForceJson
         urlCoderwall = @settings.coderwallForceJson
       $.ajax urlCoderwall,
         success: (data, textStatus, jqXHR) ->
+          for dataBadge in data.badges
+            $divBadge = $('<div>')
+              .attr('data-badge-name', dataBadge.name)
+              .addClass('cw-badge')
+            $divBadges.append(
+              $divBadge
+            )
+
+            $img = $('<img />')
+              .attr('src', dataBadge.badge)
+            $divBadge.append(
+              $img
+            )
+
+            $description = $('<span>')
+              .addClass('description')
+              .append(dataBadge.description)
+            $divBadge.append(
+              $description
+            )
+
+            date = new Date(dataBadge.created)
+            created = ("0"+date.getDate()).slice(-2) +
+              '-' + ("0"+(date.getMonth()+1)).slice(-2) +
+              '-' + date.getFullYear()
+
+            $created = $('<span>')
+              .addClass('created')
+              .append(created)
+            $divBadge.append(
+              $created
+            )
 
     @github = ->
       # GitHub Repositories

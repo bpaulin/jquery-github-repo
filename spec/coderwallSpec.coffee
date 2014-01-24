@@ -1,7 +1,11 @@
 describe 'coderwall badges', ->
 
   beforeEach ->
-    loadFixtures('origin.html')
+    getJSONFixture 'coderwall.json'
+    loadFixtures 'origin.html'
+    spyOn($, 'ajax').and.callFake (req, obj) ->
+      obj.success(getJSONFixture 'coderwall.json')
+
     @$element = $( '#fixtures' )
     @$element.githubRepo()
 
@@ -20,3 +24,32 @@ describe 'coderwall badges', ->
       expect(
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('coderwall.json')
+
+  describe 'simple case (A skill)', ->
+    it 'should be in a div.cw-badge ided by data-badge-name', ->
+      expect(
+        @$element.find(
+          'div.badges div.cw-badge[data-badge-name="A skill"]'
+        ).length
+      ).toBe(1)
+
+    it 'should display badge image', ->
+      expect(
+        @$element.find(
+          'div.badges div.cw-badge[data-badge-name="A skill"] img'
+        )
+      ).toHaveAttr('src', 'https://path.to/skill.png')
+
+    it 'should display badge description in .description', ->
+      expect(
+        @$element.find(
+          'div.badges div.cw-badge[data-badge-name="A skill"] .description'
+        )
+      ).toContainText('Have a skill')
+
+    it 'should display badge creation date in .created', ->
+      expect(
+        @$element.find(
+          'div.badges div.cw-badge[data-badge-name="A skill"] .created'
+        )
+      ).toContainText('01-01-2012')

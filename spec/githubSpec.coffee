@@ -1,9 +1,13 @@
 describe 'Github Repositories', ->
 
   beforeEach ->
-    loadFixtures('origin.html')
+    getJSONFixture 'github_user.json'
+    loadFixtures 'origin.html'
+    spyOn($, 'ajax').and.callFake (req, obj) ->
+      obj.success(getJSONFixture 'github_user.json')
+
     @$element = $( '#fixtures' )
-    @$element.githubRepo()
+    @$element.githubRepo({"coderwall": false})
 
   describe 'Github API', ->
     it 'should call the correct url', ->

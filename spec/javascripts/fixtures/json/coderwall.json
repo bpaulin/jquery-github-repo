@@ -8,16 +8,16 @@
       "badge": "https://path.to/skill.png"
     },
     {
-      "name": "A skill 2",
-      "description": "Have a better skill",
+      "name": "A multilevel skill",
+      "description": "Have a multilevel skill",
       "created": "2013-01-01T00:00:00Z",
-      "badge": "https://path.to/skill2.png"
+      "badge": "https://path.to/multilevel-skill.png"
     },
     {
-      "name": "A different skill",
-      "description": "Have a different skill",
+      "name": "A multilevel skill 2",
+      "description": "Have a multilevel skill 2",
       "created": "2014-01-01T00:00:00Z",
-      "badge": "https://path.to/another-skill.png"
+      "badge": "https://path.to/multilevel-skill-2.png"
     }
   ]
 }
