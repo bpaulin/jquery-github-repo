@@ -47,6 +47,13 @@ describe 'coderwall badges', ->
         )
       ).toContainText('Have a skill')
 
+    it 'should display badge name in .name', ->
+      expect(
+        @$element.find(
+          'div.badges div.cw-badge[data-badge-name="A skill"] .name'
+        )
+      ).toContainText('A skill')
+
     it 'should display badge creation date in .created', ->
       expect(
         @$element.find(

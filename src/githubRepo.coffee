@@ -52,36 +52,30 @@ jQuery ->
 
           # Display
           for dataBadge in badges
-            $divBadge = $('<div>')
-              .attr('data-badge-name', dataBadge.name)
-              .addClass('cw-badge')
-            $divBadges.append(
-              $divBadge
-            )
-
-            $img = $('<img />')
-              .attr('src', dataBadge.badge)
-            $divBadge.append(
-              $img
-            )
-
-            $description = $('<span>')
-              .addClass('description')
-              .append(dataBadge.description)
-            $divBadge.append(
-              $description
-            )
-
             date = new Date(dataBadge.created)
             created = ("0"+date.getDate()).slice(-2) +
               '-' + ("0"+(date.getMonth()+1)).slice(-2) +
               '-' + date.getFullYear()
-
-            $created = $('<span>')
-              .addClass('created')
-              .append(created)
-            $divBadge.append(
-              $created
+            template =
+            $divBadges.append(
+              """
+              <div class="cw-badge row"
+                data-badge-name="#{ dataBadge.name }">
+                <div class="col-sm-1 col-xs-2">
+                  <img src="#{ dataBadge.badge }"
+                    alt="#{ dataBadge.name }"
+                    class="img-responsive"
+                    style="margin-top:20px"/>
+                </div>
+                <div class="col-sm-11 col-xs-10">
+                  <h3 class="name">
+                    #{ dataBadge.name }
+                    <small class="created">#{ created }</small>
+                  </h3>
+                  <p class="description">#{ dataBadge.description }</p>
+                </div>
+              </div>
+              """
             )
 
     @github = ->
