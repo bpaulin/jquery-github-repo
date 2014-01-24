@@ -1,5 +1,5 @@
 /*global module:false*/
-module.exports = function(grunt) { 
+module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'spec/',
           src: '*.coffee',
-          dest: 'spec/dist/',
+          dest: 'spec/javascripts/',
           ext: '.js'
         }]
       },
@@ -45,16 +45,19 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'spec//helpers/',
           src: '*.coffee',
-          dest: 'spec/dist/helpers/',
+          dest: 'spec/javascripts/helpers/',
           ext: '.js'
         }]
       }
     },
     jasmine : {
-      src     : ['dist/*.js','!js/*.min.js'],
+      src     : ['dist/*.js','!dist/*.min.js'],
       options : {
-        specs   : 'spec/dist/*.js',
-        helpers : 'spec/dist/helpers/*.js',
+        specs   : 'spec/javascripts/*.js',
+        helpers : [
+          'spec/javascripts/helpers/*.js',
+          "node_modules/jquery/dist/jquery.min.js"
+          ],
         vendor : [
           "node_modules/jquery/dist/jquery.min.js",
           "node_modules/jasmine-jquery/lib/jasmine-jquery.js",
@@ -63,10 +66,11 @@ module.exports = function(grunt) {
     },
     watch : {
       files: [
-        'src/*.coffee', 
-        'spec/**/*.coffee'
+        'src/*.coffee',
+        'spec/**/*.coffee',
+        'spec/javascripts/fixtures/**/*'
       ],
-      tasks: ['coffeelint', 'growl:coffeelint', 'coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
+      tasks: ['default']
     },
     growl : {
       coffeelint : {
@@ -82,7 +86,9 @@ module.exports = function(grunt) {
         message : 'Tests passed successfully'
       }
     },
-    clean: ["dist", "spec/dist"],
+    clean: {
+      files: ['dist/**/*.js', 'spec/**/*.js']
+    },
     coffeelint: {
       app: ['src/**/*.coffee', 'spec/**/*.coffee']
     }
@@ -98,10 +104,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default and Build tasks
-  mainTasks = ['coffeelint', 'growl:coffeelint', 'coffee', 'growl:coffee', 'jasmine', 'growl:jasmine']
-  grunt.registerTask('default', mainTasks);
-  grunt.registerTask('build', mainTasks.concat(['uglify']));
+  mainTasks = ['clean', 'coffeelint', 'coffee', 'jasmine']
+  grunt.registerTask('default', mainTasks.concat(['uglify']));
 
   // Travis CI task.
-  grunt.registerTask('travis', ['coffee', 'jasmine']);
+  grunt.registerTask('test', mainTasks);
 };

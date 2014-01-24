@@ -6,6 +6,7 @@
   <title>githubRepo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
 
 <body>
@@ -16,20 +17,12 @@
     </header>
 
     <div id="main">
-      <div class="jquery-github-repo" data-repository="bpaulin/jquery-github-repo">
-        jouer avec coffeescript, ajax &amp; co
-      </div>
-
-      <div class="jquery-github-repo" data-repository="bpaulin/depot-manquant">
-        Ce dépot n'existe pas
-      </div>
-
-      <div class="jquery-github-repo" data-repository="symfony/symfony">
-        Symfony
-      </div>
-
-      <div class="jquery-github-repo" data-repository="bpaulin/upfit-android">
-        Depot sans travis
+      <div class="jquery-github-repo">
+        <div class="repositories">
+          <div class="repository" data-github-full-name="bpaulin/bootstrap">
+            this text stay here
+          </div>
+        </div>
       </div>
     </div>
 
@@ -43,8 +36,9 @@
   <script>
   $( function() {
     $( '.jquery-github-repo' ).githubRepo( {
-      message: 'Hello World'
-    } );
+      user: 'bpaulin',
+      githubForceJson : '../bpaulin.json'
+    });
   } );
   </script>
 
