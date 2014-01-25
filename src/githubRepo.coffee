@@ -85,48 +85,60 @@ jQuery ->
 </div>
 """)
 
+    # GitHub Repositories
     @github = ->
-      # GitHub Repositories
+      # DOM element to use
       if @$element.find('div.repositories').length>0
+        # use existing div.repositories if any
         repositories = @$element.find('div.repositories')[0]
       else
+        # create a div.repositories
         repositories = $('<div>').addClass('repositories')
         @$element.append(
           repositories
         )
 
+      # api url definition
       urlGithub = 'https://api.github.com/users/'+@settings.user+'/repos'
       if @settings.githubForceJson
         urlGithub = @settings.githubForceJson
+
+      # api call
       settings = @settings
+      that = @
       $.ajax urlGithub,
         success: (data, textStatus, jqXHR) ->
           for dataRepo in data
-            if $(repositories).find(
-              "[data-github-full-name='#{ dataRepo.full_name }']"
-              ).length>0
-              repository = $(repositories)
-                .find("[data-github-full-name='#{ dataRepo.full_name }']"
-              )[0]
+            # select DOM element to use for this repository
+            cssRepo = "[data-github-full-name='#{ dataRepo.full_name }']"
+            if $(repositories).find(cssRepo).length>0
+              # div.repository already exists
+              repository = $(repositories).find(cssRepo)[0]
             else
               if settings.allGithubRepos
+                # create new div.repository
                 repository = $('<div>').addClass('repository')
-                # Ajout au repositories
-                $(repositories).append(
-                  repository
-                )
+                $(repositories).append(repository)
               else
+                # we don't want to display this repo
                 break
 
-            date = new Date(dataRepo.pushed_at)
-            pushed_at = ("0"+date.getDate()).slice(-2) +
-              '-' + ("0"+(date.getMonth()+1)).slice(-2) +
-              '-' + date.getFullYear()
-            fork = ''
+            # Save Original Content
+            origine = $(repository).contents()
+            $(repository).empty()
+
+            # Prepare content
+            pushed_at = that.formatDate(dataRepo.pushed_at)
             if dataRepo.fork
               fork = '<span class="label label-warning">fork</span>'
-            template =
-            """
+            else
+              fork = ''
+
+            # Display repository
+            $(repository).addClass("panel panel-default")
+              .attr('data-github-id', dataRepo.id)
+              .attr('data-github-full-name', dataRepo.full_name)
+              .append("""
   <div class="panel-heading">
     <strong>
       <a href="#{ dataRepo.owner.html_url }" class="owner">
@@ -165,13 +177,8 @@ jQuery ->
       </a>
     </div>
   </div>
-"""
-            origine = $(repository).contents()
-            $(repository).empty()
-            $(repository).addClass("panel panel-default")
-              .attr('data-github-id', dataRepo.id)
-              .attr('data-github-full-name', dataRepo.full_name)
-              .append(template)
+""")
+            # Restore original content
             $(repository).children('.panel-body').append(origine)
 
 
