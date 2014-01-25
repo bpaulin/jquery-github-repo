@@ -186,7 +186,7 @@ jQuery ->
 
   # default plugin settings
   $.githubRepo::defaults =
-      user: 'bpaulin'
+      user: 'user'
       github: true
       githubForceJson: false
       allGithubRepos: true

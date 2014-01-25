@@ -4,9 +4,9 @@ describe 'githubRepo Parameters', ->
     @$element = $( '#fixtures' )
 
   describe 'user param', ->
-    it 'should be "bpaulin" as default', ->
+    it 'should be "user" as default', ->
       plugin = new $.githubRepo()
-      expect( plugin.settings.user ).toBe( "bpaulin" )
+      expect( plugin.settings.user ).toBe( "user" )
 
   describe 'githubForceJson param', ->
     it 'should be false as default', ->
