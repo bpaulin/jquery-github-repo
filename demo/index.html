@@ -18,10 +18,14 @@
 
     <div id="main">
       <div class="jquery-github-repo">
+        <h2>Repos</h2>
         <div class="repositories">
           <div class="repository" data-github-full-name="user/repo1">
             this text stay here
           </div>
+        </div>
+        <h2>Badges</h2>
+        <div class="badges">
         </div>
       </div>
     </div>
@@ -38,6 +42,8 @@
     $( '.jquery-github-repo' ).githubRepo( {
       user: 'user',
       githubForceJson : '../spec/javascripts/fixtures/json/github_user.json',
+      coderwallForceJson : '../spec/javascripts/fixtures/json/coderwall.json',
+      allGithubRepos : false
     });
   } );
   </script>

@@ -1,19 +1,29 @@
 describe 'Github Repositories', ->
 
   beforeEach ->
-    loadFixtures('origin.html')
+    getJSONFixture 'github_user.json'
+    loadFixtures 'origin.html'
+    spyOn($, 'ajax').and.callFake (req, obj) ->
+      obj.success(getJSONFixture 'github_user.json')
+
     @$element = $( '#fixtures' )
-    @$element.githubRepo()
+    @$element.githubRepo({"coderwall": false})
 
   describe 'Github API', ->
     it 'should call the correct url', ->
-      plugin = new $.githubRepo(@$element, {"user":"noone"})
+      plugin = new $.githubRepo(
+        @$element,
+        {"user":"noone", "coderwall": false}
+      )
       expect(
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('https://api.github.com/users/noone/repos')
 
     it 'should call the forced url', ->
-      plugin = new $.githubRepo(@$element, {"githubForceJson":"user.json"})
+      plugin = new $.githubRepo(
+        @$element,
+        {"githubForceJson":"user.json", "coderwall": false}
+      )
       expect(
         $.ajax.calls.mostRecent().args[0]
       ).toEqual('user.json')
@@ -39,7 +49,7 @@ describe 'Github Repositories', ->
   it 'should only fill existant div.repository if allGithubRepos is false', ->
     loadFixtures('origin.html')
     @$element = $( '#fixtures' )
-    @$element.githubRepo({allGithubRepos:false})
+    @$element.githubRepo({allGithubRepos:false, coderwall:false})
     expect(
       $('.repository[data-github-full-name="user/repo1"] ')
     ).toBeInDOM()

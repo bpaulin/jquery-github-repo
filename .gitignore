@@ -5,3 +5,4 @@ node_modules/
 /spec/javascripts/**/*.js
 /dist
 bpaulin.json
+badges.json
