@@ -36,6 +36,17 @@ describe 'Github Repositories', ->
       )
     ).toContainText('this text stay here')
 
+  it 'should only fill existant div.repository if allGithubRepos is false', ->
+    loadFixtures('origin.html')
+    @$element = $( '#fixtures' )
+    @$element.githubRepo({allGithubRepos:false})
+    expect(
+      $('.repository[data-github-full-name="bpaulin/bootstrap"] ')
+    ).toBeInDOM()
+    expect(
+      $('.repository[data-github-full-name="bpaulin/repo2"] ')
+    ).not.toBeInDOM()
+
   describe 'A repository', ->
     it 'should have the same structure as a twbs panel', ->
       $('#fixtures div.repositories div.repository').each (i, e)->
@@ -46,7 +57,7 @@ describe 'Github Repositories', ->
         expect(children[1]).toBeMatchedBy('div.panel-body')
         expect(children[2]).toBeMatchedBy('div.panel-footer')
 
-    describe 'should fill repository data for:', ->
+    xdescribe 'should fill repository data for:', ->
       repos = getJSONFixture('github_user.json')
       for repo in repos
         # describe each repos

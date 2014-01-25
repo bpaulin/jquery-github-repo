@@ -12,3 +12,8 @@ describe 'githubRepo Parameters', ->
     it 'should be false as default', ->
       plugin = new $.githubRepo()
       expect( plugin.settings.githubForceJson ).toBe( false )
+
+  describe 'allGithubRepos param', ->
+    it 'should be true as default', ->
+      plugin = new $.githubRepo()
+      expect( plugin.settings.allGithubRepos ).toBe( true )

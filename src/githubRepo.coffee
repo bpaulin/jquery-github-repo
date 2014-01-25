@@ -43,6 +43,22 @@ jQuery ->
       $.ajax urlGithub,
         success: (data, textStatus, jqXHR) ->
           for dataRepo in data
+            if $(repositories).find(
+              "[data-github-full-name='#{ dataRepo.full_name }']"
+              ).length>0
+              repository = $(repositories)
+                .find("[data-github-full-name='#{ dataRepo.full_name }']"
+              )[0]
+            else
+              if settings.allGithubRepos
+                repository = $('<div>').addClass('repository')
+                # Ajout au repositories
+                $(repositories).append(
+                  repository
+                )
+              else
+                break
+
             date = new Date(dataRepo.pushed_at)
             pushed_at = ("0"+date.getDate()).slice(-2) +
               '-' + ("0"+(date.getMonth()+1)).slice(-2) +
@@ -91,18 +107,6 @@ jQuery ->
     </div>
   </div>
 """
-            if $(repositories).find(
-              "[data-github-full-name='#{ dataRepo.full_name }']"
-              ).length>0
-              repository = $(repositories)
-                .find("[data-github-full-name='#{ dataRepo.full_name }']"
-              )[0]
-            else
-              repository = $('<div>').addClass('repository')
-              # Ajout au repositories
-              $(repositories).append(
-                repository
-              )
             origine = $(repository).contents()
             $(repository).empty()
             $(repository).addClass("panel panel-default")
@@ -123,6 +127,7 @@ jQuery ->
   $.githubRepo::defaults =
       user: 'bpaulin'
       githubForceJson: false
+      allGithubRepos: true
 
 
   $.fn.githubRepo = ( options ) ->
