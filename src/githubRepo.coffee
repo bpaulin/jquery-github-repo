@@ -23,60 +23,67 @@ jQuery ->
     @callSettingFunction = ( name, args = [] ) ->
       @settings[name].apply( this, args )
 
+    # Format date
+    @formatDate = ( isoDate ) ->
+      date = new Date(isoDate)
+      return ("0"+date.getDate()).slice(-2) +
+        '-' + ("0"+(date.getMonth()+1)).slice(-2) +
+        '-' + date.getFullYear()
+
+    # Coderwall badges
     @coderwall = ->
-      # Coderwall badges
+      # DOM element to use
       if @$element.find('div.badges').length>0
+        # use existing div.badges if any
         $divBadges = @$element.find('div.badges')
       else
+        # create a div.badges
         $divBadges = $('<div>').addClass('badges')
         @$element.append(
           $divBadges
         )
 
-      urlCoderwall = 'http://www.coderwall.com/'+@settings.user+'.json'
+      # api url definition
+      urlCoderwall = "http://www.coderwall.com/#{ @settings.user }.json"
       if @settings.coderwallForceJson
         urlCoderwall = @settings.coderwallForceJson
+
+      # api call
+      that = @
       $.ajax urlCoderwall,
         success: (data, textStatus, jqXHR) ->
-          # Filter
+          # Filter badges
           badges = data.badges.slice(0)
           for dataBadge in data.badges
             levels = new Array()
             for badge in data.badges
               if badge.name.indexOf(dataBadge.name)!=-1
                 levels.push(badge)
-
+            # keep only top levels badges
             if levels.length>1
               for level in levels when levels.indexOf(level) != levels.length-1
                 badges.splice(badges.indexOf(level),1)
 
-          # Display
+          # Display badges
           for dataBadge in badges
-            date = new Date(dataBadge.created)
-            created = ("0"+date.getDate()).slice(-2) +
-              '-' + ("0"+(date.getMonth()+1)).slice(-2) +
-              '-' + date.getFullYear()
-            template =
-            $divBadges.append(
-              """
-              <div class="cw-badge row"
-                data-badge-name="#{ dataBadge.name }">
-                <div class="col-sm-1 col-xs-2">
-                  <img src="#{ dataBadge.badge }"
-                    alt="#{ dataBadge.name }"
-                    class="img-responsive"
-                    style="margin-top:20px"/>
-                </div>
-                <div class="col-sm-11 col-xs-10">
-                  <h3 class="name">
-                    #{ dataBadge.name }
-                    <small class="created">#{ created }</small>
-                  </h3>
-                  <p class="description">#{ dataBadge.description }</p>
-                </div>
-              </div>
-              """
-            )
+            $divBadges.append("""
+<div class="cw-badge row"
+  data-badge-name="#{ dataBadge.name }">
+  <div class="col-sm-1 col-xs-2">
+    <img src="#{ dataBadge.badge }"
+      alt="#{ dataBadge.name }"
+      class="img-responsive"
+      style="margin-top:20px"/>
+  </div>
+  <div class="col-sm-11 col-xs-10">
+    <h3 class="name">
+      #{ dataBadge.name }
+      <small class="created">#{ that.formatDate(dataBadge.created) }</small>
+    </h3>
+    <p class="description">#{ dataBadge.description }</p>
+  </div>
+</div>
+""")
 
     @github = ->
       # GitHub Repositories
