@@ -105,11 +105,6 @@ describe 'Github Repositories', ->
           expect(link).toContainText(repo.forks)
           expect(link).toHaveAttr('href', repo.html_url+'/forks')
 
-        xit 'should display link to github in (.github)', ->
-          expect(
-            @$repo.find('a.github')
-          ).toHaveAttr('href', repo.html_url)
-
         it 'should display description in (.panel-heading .description)', ->
           expect(
             @$repo.find('.panel-body .description')
