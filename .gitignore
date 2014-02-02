@@ -1,8 +1,6 @@
 .DS_Store
 .grunt/
 node_modules/
-/*.sublime-workspace
-/spec/javascripts/**/*.js
-/dist
-bpaulin.json
+spec/**/*.js
+github.json
 badges.json

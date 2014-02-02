@@ -23,103 +23,122 @@ jQuery ->
     @callSettingFunction = ( name, args = [] ) ->
       @settings[name].apply( this, args )
 
+    # Format date
+    @formatDate = ( isoDate ) ->
+      date = new Date(isoDate)
+      return ("0"+date.getDate()).slice(-2) +
+        '-' + ("0"+(date.getMonth()+1)).slice(-2) +
+        '-' + date.getFullYear()
+
+    # Coderwall badges
     @coderwall = ->
-      # Coderwall badges
+      # DOM element to use
       if @$element.find('div.badges').length>0
+        # use existing div.badges if any
         $divBadges = @$element.find('div.badges')
       else
+        # create a div.badges
         $divBadges = $('<div>').addClass('badges')
         @$element.append(
           $divBadges
         )
 
-      urlCoderwall = 'http://www.coderwall.com/'+@settings.user+'.json'
+      # api url definition
+      urlCoderwall = "http://www.coderwall.com/#{ @settings.user }.json"
       if @settings.coderwallForceJson
         urlCoderwall = @settings.coderwallForceJson
+
+      # api call
+      that = @
       $.ajax urlCoderwall,
         success: (data, textStatus, jqXHR) ->
-          # Filter
+          # Filter badges
           badges = data.badges.slice(0)
           for dataBadge in data.badges
             levels = new Array()
             for badge in data.badges
               if badge.name.indexOf(dataBadge.name)!=-1
                 levels.push(badge)
-
+            # keep only top levels badges
             if levels.length>1
               for level in levels when levels.indexOf(level) != levels.length-1
                 badges.splice(badges.indexOf(level),1)
 
-          # Display
+          # Display badges
           for dataBadge in badges
-            date = new Date(dataBadge.created)
-            created = ("0"+date.getDate()).slice(-2) +
-              '-' + ("0"+(date.getMonth()+1)).slice(-2) +
-              '-' + date.getFullYear()
-            template =
-            $divBadges.append(
-              """
-              <div class="cw-badge row"
-                data-badge-name="#{ dataBadge.name }">
-                <div class="col-sm-1 col-xs-2">
-                  <img src="#{ dataBadge.badge }"
-                    alt="#{ dataBadge.name }"
-                    class="img-responsive"
-                    style="margin-top:20px"/>
-                </div>
-                <div class="col-sm-11 col-xs-10">
-                  <h3 class="name">
-                    #{ dataBadge.name }
-                    <small class="created">#{ created }</small>
-                  </h3>
-                  <p class="description">#{ dataBadge.description }</p>
-                </div>
-              </div>
-              """
-            )
+            $divBadges.append("""
+<div class="cw-badge row"
+  data-badge-name="#{ dataBadge.name }">
+  <div class="col-sm-1 col-xs-2">
+    <img src="#{ dataBadge.badge }"
+      alt="#{ dataBadge.name }"
+      class="img-responsive"
+      style="margin-top:20px"/>
+  </div>
+  <div class="col-sm-11 col-xs-10">
+    <h3 class="name">
+      #{ dataBadge.name }
+      <small class="created">#{ that.formatDate(dataBadge.created) }</small>
+    </h3>
+    <p class="description">#{ dataBadge.description }</p>
+  </div>
+</div>
+""")
 
+    # GitHub Repositories
     @github = ->
-      # GitHub Repositories
+      # DOM element to use
       if @$element.find('div.repositories').length>0
+        # use existing div.repositories if any
         repositories = @$element.find('div.repositories')[0]
       else
+        # create a div.repositories
         repositories = $('<div>').addClass('repositories')
         @$element.append(
           repositories
         )
 
+      # api url definition
       urlGithub = 'https://api.github.com/users/'+@settings.user+'/repos'
       if @settings.githubForceJson
         urlGithub = @settings.githubForceJson
+
+      # api call
       settings = @settings
+      that = @
       $.ajax urlGithub,
         success: (data, textStatus, jqXHR) ->
           for dataRepo in data
-            if $(repositories).find(
-              "[data-github-full-name='#{ dataRepo.full_name }']"
-              ).length>0
-              repository = $(repositories)
-                .find("[data-github-full-name='#{ dataRepo.full_name }']"
-              )[0]
+            # select DOM element to use for this repository
+            cssRepo = "[data-github-full-name='#{ dataRepo.full_name }']"
+            if $(repositories).find(cssRepo).length>0
+              # div.repository already exists
+              repository = $(repositories).find(cssRepo)[0]
             else
               if settings.allGithubRepos
+                # create new div.repository
                 repository = $('<div>').addClass('repository')
-                # Ajout au repositories
-                $(repositories).append(
-                  repository
-                )
+                $(repositories).append(repository)
               else
+                # we don't want to display this repo
                 break
 
-            date = new Date(dataRepo.pushed_at)
-            pushed_at = ("0"+date.getDate()).slice(-2) +
-              '-' + ("0"+(date.getMonth()+1)).slice(-2) +
-              '-' + date.getFullYear()
-            fork = ''
+            # Save Original Content
+            origine = $(repository).contents()
+            $(repository).empty()
+
+            # Prepare content
+            pushed_at = that.formatDate(dataRepo.pushed_at)
             if dataRepo.fork
               fork = '<span class="label label-warning">fork</span>'
-            template =
-            """
+            else
+              fork = ''
+
+            # Display repository
+            $(repository).addClass("panel panel-default")
+              .attr('data-github-id', dataRepo.id)
+              .attr('data-github-full-name', dataRepo.full_name)
+              .append("""
   <div class="panel-heading">
     <strong>
       <a href="#{ dataRepo.owner.html_url }" class="owner">
@@ -158,13 +177,8 @@ jQuery ->
       </a>
     </div>
   </div>
-"""
-            origine = $(repository).contents()
-            $(repository).empty()
-            $(repository).addClass("panel panel-default")
-              .attr('data-github-id', dataRepo.id)
-              .attr('data-github-full-name', dataRepo.full_name)
-              .append(template)
+""")
+            # Restore original content
             $(repository).children('.panel-body').append(origine)
 
 
@@ -186,7 +200,7 @@ jQuery ->
 
   # default plugin settings
   $.githubRepo::defaults =
-      user: 'bpaulin'
+      user: 'user'
       github: true
       githubForceJson: false
       allGithubRepos: true

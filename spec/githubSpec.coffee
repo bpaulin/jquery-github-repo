@@ -1,10 +1,10 @@
 describe 'Github Repositories', ->
 
   beforeEach ->
-    getJSONFixture 'github_user.json'
+    getJSONFixture 'github.json'
     loadFixtures 'origin.html'
     spyOn($, 'ajax').and.callFake (req, obj) ->
-      obj.success(getJSONFixture 'github_user.json')
+      obj.success(getJSONFixture 'github.json')
 
     @$element = $( '#fixtures' )
     @$element.githubRepo({"coderwall": false})
@@ -37,7 +37,7 @@ describe 'Github Repositories', ->
     it 'should contain each repository in a div.repository', ->
       expect(
         @$element.children('div.repositories').children('div.repository').length
-      ).toBe(getJSONFixture('github_user.json').length)
+      ).toBe(getJSONFixture('github.json').length)
 
   it 'should move content in repository body', ->
     expect(
@@ -58,7 +58,7 @@ describe 'Github Repositories', ->
     ).not.toBeInDOM()
 
   describe 'Each repository', ->
-    repos = getJSONFixture('github_user.json')
+    repos = getJSONFixture('github.json')
     for repo in repos
       # describe each repos
       describe repo.full_name, ->
@@ -104,11 +104,6 @@ describe 'Github Repositories', ->
           link = @$repo.find('.panel-heading .forks')[0]
           expect(link).toContainText(repo.forks)
           expect(link).toHaveAttr('href', repo.html_url+'/forks')
-
-        xit 'should display link to github in (.github)', ->
-          expect(
-            @$repo.find('a.github')
-          ).toHaveAttr('href', repo.html_url)
 
         it 'should display description in (.panel-heading .description)', ->
           expect(
