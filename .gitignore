@@ -1,3 +1,6 @@
 .DS_Store
 .grunt/
 node_modules/
+spec/**/*.js
+github.json
+badges.json

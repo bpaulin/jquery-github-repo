@@ -1,35 +1,37 @@
 {
-  "name"            : "jquery-github-repo",
-  "title"           : "jquery-github-repo",
-  "description"     : "bpaulin/jquery-github-repo",
-  "version"         : "0.1.1",
-  "homepage"        : "https://github.com/bpaulin/jquery-github-repo",
-  "author"          : {
-    "name"  : "Bruno Paulin",
-    "email" : "brunopaulin@bpaulin.net",
-    "url"   : "http://bpaulin.net"
+  "name": "jquery-github-repo",
+  "title": "jquery-github-repo",
+  "description": "bpaulin/jquery-github-repo",
+  "version": "0.2.0",
+  "homepage": "https://github.com/bpaulin/jquery-github-repo",
+  "author": {
+    "name": "Bruno Paulin",
+    "email": "brunopaulin@bpaulin.net",
+    "url": "http://bpaulin.net"
   },
-  "repository" : {
-    "type" : "git",
-    "url"  : "git://github.com/bpaulin/jquery-github-repo.git"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bpaulin/jquery-github-repo.git"
   },
-  "licenses": [{
-    "type": "MIT"
-  }],
-  "devDependencies" : {
-    "grunt"                : "latest",
-    "grunt-cli"            : "latest",
-    "grunt-contrib-watch"  : "latest",
-    "grunt-contrib-coffee" : "latest",
-    "grunt-contrib-jasmine": "latest",
-    "grunt-contrib-uglify" : "latest",
-    "grunt-contrib-clean"  : "latest",
-    "grunt-growl"          : "latest",
-    "jquery"               : "latest",
-    "jasmine-jquery"       : "latest",
-    "grunt-coffeelint"     : "latest"
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-cli": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-coffee": "latest",
+    "grunt-contrib-jasmine": "gruntjs/grunt-contrib-jasmine#jasmine2-support",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-clean": "latest",
+    "grunt-growl": "latest",
+    "jquery": "latest",
+    "jasmine-jquery": "velesin/jasmine-jquery",
+    "grunt-coffeelint": "latest"
   },
   "scripts": {
-    "test": "grunt travis"
+    "test": "grunt test"
   }
 }
