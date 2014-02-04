@@ -99,7 +99,7 @@
                   repository = $('<div>').addClass('repository');
                   $(repositories).append(repository);
                 } else {
-                  break;
+                  continue;
                 }
               }
               origine = $(repository).contents();
