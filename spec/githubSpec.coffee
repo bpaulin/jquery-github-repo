@@ -51,7 +51,7 @@ describe 'Github Repositories', ->
     @$element = $( '#fixtures' )
     @$element.githubRepo({allGithubRepos:false, coderwall:false})
     expect(
-      $('.repository[data-github-full-name="user/repo1"] ')
+      $('.repository[data-github-full-name="user/repo1"] .panel-heading .name')
     ).toBeInDOM()
     expect(
       $('.repository[data-github-full-name="user/small"] ')

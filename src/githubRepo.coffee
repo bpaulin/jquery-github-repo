@@ -121,7 +121,7 @@ jQuery ->
                 $(repositories).append(repository)
               else
                 # we don't want to display this repo
-                break
+                continue
 
             # Save Original Content
             origine = $(repository).contents()

@@ -1,23 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "repo1",
-    "full_name": "user/repo1",
-    "owner": {
-      "login": "user",
-      "html_url": "https://github.com/user"
-    },
-    "html_url": "https://github.com/user/repo1",
-    "description": "first repo",
-    "fork": false,
-    "pushed_at": "2012-01-15T00:00:00Z",
-    "homepage": null,
-    "language": "PHP",
-    "forks": 10,
-    "watchers": 5,
-    "default_branch": "master"
-  },
-  {
     "id": 2,
     "name": "forked",
     "full_name": "user/forked",
@@ -33,6 +15,24 @@
     "language": "PHP",
     "forks": 0,
     "watchers": 0,
+    "default_branch": "master"
+  },
+  {
+    "id": 1,
+    "name": "repo1",
+    "full_name": "user/repo1",
+    "owner": {
+      "login": "user",
+      "html_url": "https://github.com/user"
+    },
+    "html_url": "https://github.com/user/repo1",
+    "description": "first repo",
+    "fork": false,
+    "pushed_at": "2012-01-15T00:00:00Z",
+    "homepage": null,
+    "language": "PHP",
+    "forks": 10,
+    "watchers": 5,
     "default_branch": "master"
   },
   {
